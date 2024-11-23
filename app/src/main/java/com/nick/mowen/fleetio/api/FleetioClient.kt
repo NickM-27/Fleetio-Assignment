@@ -70,7 +70,7 @@ class FleetioClient {
         @GET("comments")
         fun getComments(@Query("start_cursor") startCursor: String?): Call<CommentResponse>
 
-        @GET("vehicles/{vehicleId}/vehicle_assignments")
+        @GET("vehicles/{vehicleId}/current_assignment")
         fun getVehicleAssignments(
             @Path("vehicleId") vehicleId: Long
         ): Call<AssignmentResponse>

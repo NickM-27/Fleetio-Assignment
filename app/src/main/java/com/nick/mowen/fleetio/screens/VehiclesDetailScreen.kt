@@ -37,7 +37,7 @@ import com.nick.mowen.fleetio.R
 import com.nick.mowen.fleetio.components.LazyLoadingColumn
 import com.nick.mowen.fleetio.components.TabGroup
 import com.nick.mowen.fleetio.components.VehicleImage
-import com.nick.mowen.fleetio.data.Assignment
+import com.nick.mowen.fleetio.data.AssignmentResponse
 import com.nick.mowen.fleetio.data.Vehicle
 import com.nick.mowen.fleetio.data.VehicleComment
 import kotlinx.coroutines.flow.StateFlow
@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun VehicleDetailsScreen(
     vehicle: Vehicle,
-    assignmentState: StateFlow<Assignment?>,
+    assignmentState: StateFlow<AssignmentResponse?>,
     commentsState: StateFlow<List<VehicleComment>?>,
     onNavigateBack: () -> Unit
 ) {
@@ -83,7 +83,7 @@ fun VehicleDetailsScreen(
 }
 
 @Composable
-fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment?>) {
+fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<AssignmentResponse?>) {
     val assignment = assignmentState.collectAsState()
 
     Column {
@@ -126,9 +126,8 @@ fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(stringResource(titleId), fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 ListItem(
-                    leadingContent = { AsyncImage(assignment.contact.imageUrl, "", modifier = Modifier.size(48.dp)) },
-                    headlineContent = { Text(assignment.contact.name, fontWeight = FontWeight.Bold) },
-                    supportingContent = { Text(assignment.contact.email) }
+                    leadingContent = { AsyncImage(assignment.imageUrl, "", modifier = Modifier.size(48.dp)) },
+                    headlineContent = { Text(assignment.name, fontWeight = FontWeight.Bold) },
                 )
             }
         }
