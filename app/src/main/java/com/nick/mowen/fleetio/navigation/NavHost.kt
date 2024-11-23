@@ -16,7 +16,9 @@ fun FleetioNavigation(viewModel: VehiclesViewModel) {
         NavHost(navController, startDestination = Unit) {
             composable<Unit> {
                 viewModel.getVehicles()
-                VehiclesScreen(viewModel.vehicles, viewModel.isLoading, viewModel.canLoadMoreVehicles, onLoadMore = {
+                VehiclesScreen(viewModel.vehicles, viewModel.isLoading, viewModel.canLoadMoreVehicles, onUpdateFilter = { name, status ->
+                    viewModel.updateVehicleFilter(name, status)
+                }, onLoadMore = {
                     viewModel.getMoreVehicles()
                 }) { vehicle ->
                     navController.navigate(vehicle)

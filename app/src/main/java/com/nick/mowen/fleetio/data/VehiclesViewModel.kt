@@ -12,6 +12,8 @@ class VehiclesViewModel : ViewModel() {
 
     private val client = FleetioClient()
 
+    // data
+
     private val _vehicleResponses: MutableStateFlow<List<VehiclesResponse>?> = MutableStateFlow(null)
 
     private val _vehicles: MutableStateFlow<List<Vehicle>?> = MutableStateFlow(null)
@@ -25,11 +27,18 @@ class VehiclesViewModel : ViewModel() {
     private val _comments: MutableStateFlow<List<VehicleComment>?> = MutableStateFlow(null)
     val comments: StateFlow<List<VehicleComment>?> = _comments.asStateFlow()
 
+    // loading state
+
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     private val _canLoadMoreVehicles: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val canLoadMoreVehicles: StateFlow<Boolean> = _canLoadMoreVehicles.asStateFlow()
+
+    // filter
+
+    private var nameFilter = ""
+    private var statusFilter = VehicleStatus.entries.toSet()
 
     fun getVehicles() = viewModelScope.launch {
         _isLoading.emit(true)
@@ -73,5 +82,13 @@ class VehiclesViewModel : ViewModel() {
             _commentResponses.emit(listOf(commentResponse))
             _comments.emit(commentResponse.comments)
         }
+    }
+
+    fun updateVehicleFilter(nameFilter: String, statusFilter: Set<VehicleStatus>) {
+        this.nameFilter = nameFilter
+        this.statusFilter = statusFilter
+
+        // re-query vehicles
+        getVehicles()
     }
 }

@@ -28,7 +28,7 @@ import com.nick.mowen.fleetio.components.LazyLoadingColumn
 import com.nick.mowen.fleetio.components.VehicleFilterBottomSheet
 import com.nick.mowen.fleetio.components.VehicleListItem
 import com.nick.mowen.fleetio.data.Vehicle
-import com.nick.mowen.fleetio.data.VehicleFilter
+import com.nick.mowen.fleetio.data.VehicleStatus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,6 +39,7 @@ fun VehiclesScreen(
     vehiclesState: StateFlow<List<Vehicle>?>,
     isLoadingState: StateFlow<Boolean>,
     canLoadMoreState: StateFlow<Boolean>,
+    onUpdateFilter: (String, Set<VehicleStatus>) -> Unit,
     onLoadMore: () -> Unit,
     onSelectVehicle: (Vehicle) -> Unit,
 ) {
@@ -73,7 +74,7 @@ fun VehiclesScreen(
             loadMore = onLoadMore,
         )
 
-        VehicleFilterBottomSheet(VehicleFilter(), showBottomSheet) { showBottomSheet = false }
+        VehicleFilterBottomSheet(showBottomSheet, onUpdateFilter) { showBottomSheet = false }
     }
 }
 
@@ -87,7 +88,7 @@ private fun VehiclesScreenPreview() {
     ).asStateFlow()
     val isLoadingState = MutableStateFlow(false).asStateFlow()
     val canLoadMoreState = MutableStateFlow(false).asStateFlow()
-    VehiclesScreen(data, isLoadingState, canLoadMoreState, onLoadMore = {}) {
+    VehiclesScreen(data, isLoadingState, canLoadMoreState, { _, _ -> }, onLoadMore = {}) {
 
     }
 }
