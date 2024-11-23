@@ -76,6 +76,8 @@ dependencies {
     implementation(libs.network.retrofit)
     implementation(libs.network.gson)
     implementation(libs.network.serialization)
+    implementation(libs.network.coil)
+    implementation(libs.network.image)
 
     // Testing
 

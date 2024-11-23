@@ -9,3 +9,10 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+// Vehicle Status Colors
+
+val Active = Color(0xFF66BB6A)
+val InShop = Color(0xFFFFEB3B)
+val Inactive = Color(0xFF1565C0)
+val OutOfService = Color(0xFFC62828)

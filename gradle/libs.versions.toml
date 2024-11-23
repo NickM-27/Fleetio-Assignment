@@ -22,6 +22,7 @@ composeNav = "2.8.4"
 
 retrofit = "2.9.0"
 serialization = "1.6.3"
+coil = "3.0.3"
 
 # test
 
@@ -54,6 +55,8 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 network-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 network-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+network-coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+network-image = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
 # test
 
