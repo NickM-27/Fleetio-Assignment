@@ -5,12 +5,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nick.mowen.fleetio.data.Vehicle
+import com.nick.mowen.fleetio.data.VehiclesViewModel
+import com.nick.mowen.fleetio.vehicles.VehiclesScreen
 
 @Composable
-fun FleetioNavigation() {
+fun FleetioNavigation(viewModel: VehiclesViewModel) {
     NavHost(rememberNavController(), startDestination = Unit) {
         composable<Unit> {
-
+            viewModel.getVehicles()
+            VehiclesScreen(viewModel.vehicles)
         }
         composable<Vehicle> {
 

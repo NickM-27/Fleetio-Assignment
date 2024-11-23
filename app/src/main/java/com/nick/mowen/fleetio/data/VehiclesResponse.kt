@@ -1,7 +1,9 @@
 package com.nick.mowen.fleetio.data
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class VehiclesResponse(
     @SerializedName("start_cursor")
     val startCursor: String,

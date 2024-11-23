@@ -4,8 +4,6 @@ import com.nick.mowen.fleetio.BuildConfig
 import com.nick.mowen.fleetio.data.VehiclesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -14,16 +12,17 @@ import retrofit2.http.GET
 
 class FleetioClient {
 
-    private val okHttpClient: OkHttpClient = OkHttpClient.Builder().build().also { client ->
-        client.networkInterceptors().add(Interceptor { chain ->
-            chain.proceed(chain.request().newBuilder().let { builder ->
-                builder.header("Content-Type", "application/json")
-                builder.header("Authorization", BuildConfig.API_KEY)
-                builder.header("Account-Token", BuildConfig.ACCOUNT_TOKEN)
-                builder.build()
-            })
-        })
-    }
+    private val okHttpClient: OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+        chain.proceed(
+            chain.request()
+                .newBuilder()
+                .also { builder ->
+                    builder.addHeader("Content-Type", "application/json")
+                    builder.addHeader("Authorization", BuildConfig.API_KEY)
+                    builder.addHeader("Account-Token", BuildConfig.ACCOUNT_TOKEN)
+                }.build()
+        )
+    }.build()
     private val client: PrivateClient =
         Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build()
             .create(PrivateClient::class.java)
@@ -39,7 +38,7 @@ class FleetioClient {
 
     private interface PrivateClient {
 
-        @GET("")
+        @GET("vehicles")
         fun getVehicles(): Call<VehiclesResponse>
     }
 

@@ -21,7 +21,7 @@ composeNav = "2.8.4"
 # network
 
 retrofit = "2.9.0"
-serialization = "1.7.3"
+serialization = "1.6.3"
 
 # test
 
