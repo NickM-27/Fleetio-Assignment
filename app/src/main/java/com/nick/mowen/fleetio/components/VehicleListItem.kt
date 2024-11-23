@@ -2,6 +2,7 @@ package com.nick.mowen.fleetio.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -25,8 +26,10 @@ import com.nick.mowen.fleetio.R
 import com.nick.mowen.fleetio.data.Vehicle
 
 @Composable
-fun VehicleListItem(vehicle: Vehicle) {
-    Card(modifier = Modifier.padding(8.dp)) {
+fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit) {
+    Card(modifier = Modifier
+        .padding(8.dp)
+        .clickable { onClick() }) {
         ListItem(
             leadingContent = {
                 if (vehicle.hasImage()) {
@@ -61,7 +64,7 @@ fun VehicleListItem(vehicle: Vehicle) {
             },
             supportingContent = {
                 Text(vehicle.getDescription(), fontSize = 12.sp)
-            }
+            },
         )
     }
 }
@@ -69,5 +72,7 @@ fun VehicleListItem(vehicle: Vehicle) {
 @Composable
 @Preview
 fun VehicleListItemPreview() {
-    VehicleListItem(Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null))
+    VehicleListItem(Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)) {
+
+    }
 }

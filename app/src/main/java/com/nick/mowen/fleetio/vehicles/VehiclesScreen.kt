@@ -29,7 +29,8 @@ fun VehiclesScreen(
     vehiclesState: StateFlow<List<Vehicle>?>,
     isLoadingState: StateFlow<Boolean>,
     canLoadMoreState: StateFlow<Boolean>,
-    onLoadMore: () -> Unit
+    onLoadMore: () -> Unit,
+    onSelectVehicle: (Vehicle) -> Unit,
 ) {
     val vehicles = vehiclesState.collectAsState()
     val isLoading = isLoadingState.collectAsState()
@@ -43,7 +44,7 @@ fun VehiclesScreen(
             loading = isLoading.value,
             listItems = vehicles.value ?: emptyList(),
             itemKey = { vehicle -> vehicle.id },
-            itemContent = { vehicle -> VehicleListItem(vehicle) },
+            itemContent = { vehicle -> VehicleListItem(vehicle, { onSelectVehicle(vehicle) }) },
             loadingItem = {
                 Column(
                     modifier = Modifier.fillMaxSize(),
@@ -69,5 +70,7 @@ fun VehiclesScreenPreview() {
     ).asStateFlow()
     val isLoadingState = MutableStateFlow(false).asStateFlow()
     val canLoadMoreState = MutableStateFlow(false).asStateFlow()
-    VehiclesScreen(data, isLoadingState, canLoadMoreState, onLoadMore = {})
+    VehiclesScreen(data, isLoadingState, canLoadMoreState, onLoadMore = {}) {
+
+    }
 }

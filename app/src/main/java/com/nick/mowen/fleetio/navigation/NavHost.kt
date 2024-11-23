@@ -10,15 +10,19 @@ import com.nick.mowen.fleetio.vehicles.VehiclesScreen
 
 @Composable
 fun FleetioNavigation(viewModel: VehiclesViewModel) {
-    NavHost(rememberNavController(), startDestination = Unit) {
-        composable<Unit> {
-            viewModel.getVehicles()
-            VehiclesScreen(viewModel.vehicles, viewModel.isLoading, viewModel.canLoadMoreVehicles, onLoadMore = {
-                viewModel.getMoreVehicles()
-            })
-        }
-        composable<Vehicle> {
+    rememberNavController().let { navController ->
+        NavHost(navController, startDestination = Unit) {
+            composable<Unit> {
+                viewModel.getVehicles()
+                VehiclesScreen(viewModel.vehicles, viewModel.isLoading, viewModel.canLoadMoreVehicles, onLoadMore = {
+                    viewModel.getMoreVehicles()
+                }) { vehicle ->
+                    navController.navigate(vehicle)
+                }
+            }
+            composable<Vehicle> {
 
+            }
         }
     }
 }
