@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Fleetio</string>
     <string name="content_vehicle_image">Vehicle Image</string>
+    <string name="title_primary_meter">Current Meter</string>
+    <string name="title_secondary_meter">Secondary Meter</string>
+    <string name="title_vehicle_status">Vehicle Status</string>
+    <string name="title_vin">VIN</string>
+    <string name="title_license_plate">License Plate</string>
 </resources>

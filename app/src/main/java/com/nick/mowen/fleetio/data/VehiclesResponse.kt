@@ -30,6 +30,12 @@ data class Vehicle(
     @SerializedName("account_id")
     val accountId: Long,
 
+    @SerializedName("vin")
+    val vin: String,
+
+    @SerializedName("license_plate")
+    val licensePlate: String?,
+
     @SerializedName("name")
     val name: String,
 
@@ -52,12 +58,36 @@ data class Vehicle(
     val group: String?,
 
     @SerializedName("default_image_url_small")
-    val imageUrl: String?
+    val imageUrl: String?,
+
+    // primary meter
+
+    @SerializedName("primary_meter_unit")
+    val primaryMeterUnit: String?,
+
+    @SerializedName("primary_meter_value")
+    val primaryMeterValue: String?,
+
+    // secondary meter
+
+    @SerializedName("secondary_meter_unit")
+    val secondaryMeterUnit: String?,
+
+    @SerializedName("secondary_meter_value")
+    val secondaryMeterValue: String?,
 ) {
 
     fun getDescription() = "${group ?: "No Group"} • $vehicleStatus"
 
     fun getInitials() = "${make?.substring(0, 1) ?: ""}${model?.substring(0, 1) ?: ""}"
+
+    fun getPrimaryMeter() = "$primaryMeterValue $primaryMeterUnit"
+
+    fun hasSecondaryMeter() = secondaryMeterUnit != null
+
+    fun getSecondaryMeter() = "$secondaryMeterValue $secondaryMeterUnit"
+
+    fun hasLicensePlate() = licensePlate != null
 
     fun hasImage() = imageUrl != null
 

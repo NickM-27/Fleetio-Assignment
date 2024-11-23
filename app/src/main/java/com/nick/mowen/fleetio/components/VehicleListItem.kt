@@ -37,7 +37,26 @@ fun VehicleListItem(vehicle: Vehicle, onClick: () -> Unit) {
 @Composable
 @Preview
 private fun VehicleListItemPreview() {
-    VehicleListItem(Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)) {
+    VehicleListItem(
+        Vehicle(
+            123456,
+            987,
+            "123456",
+            "",
+            "Test Vehicle",
+            "Car",
+            "Active",
+            "Cool",
+            "Cars",
+            2024,
+            "Operator",
+            null,
+            "",
+            "",
+            "",
+            ""
+        )
+    ) {
 
     }
 }

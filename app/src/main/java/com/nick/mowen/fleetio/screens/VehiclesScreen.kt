@@ -65,7 +65,7 @@ fun VehiclesScreen(
 private fun VehiclesScreenPreview() {
     val data = MutableStateFlow(
         listOf(
-            Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)
+            Vehicle(123456, 987, "123456", "", "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null, "", "", "", "")
         )
     ).asStateFlow()
     val isLoadingState = MutableStateFlow(false).asStateFlow()
