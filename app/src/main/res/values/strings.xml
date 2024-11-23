@@ -10,4 +10,5 @@
     <string name="title_future_assignment">Future Operator</string>
     <string name="action_filter">Filter</string>
     <string name="title_filter_vehicles">Filter Vehicles</string>
+    <string name="title_filter_by_status">Filter by Status</string>
 </resources>

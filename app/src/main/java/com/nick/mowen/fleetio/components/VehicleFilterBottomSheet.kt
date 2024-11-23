@@ -3,10 +3,12 @@ package com.nick.mowen.fleetio.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
@@ -21,21 +23,39 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nick.mowen.fleetio.R
+import com.nick.mowen.fleetio.data.VehicleFilter
+import com.nick.mowen.fleetio.data.VehicleStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehicleFilterBottomSheet(showBottomSheet: Boolean, onDismiss: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState()
+fun VehicleFilterBottomSheet(filter: VehicleFilter, showBottomSheet: Boolean, onDismiss: () -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
 
     if (showBottomSheet) {
         ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier
+                verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Text(stringResource(R.string.title_filter_vehicles), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) { Text(stringResource(R.string.title_filter_vehicles), fontWeight = FontWeight.Bold, fontSize = 18.sp) }
+
+
+                Text(stringResource(R.string.title_filter_by_status))
+                VehicleStatus.entries.map { status ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Checkbox(true, {})
+                        Text(status.webStr)
+                    }
+                }
 
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     Button({}, shape = RoundedCornerShape(8.dp)) { Text("Apply Filter") }

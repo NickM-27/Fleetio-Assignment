@@ -28,6 +28,7 @@ import com.nick.mowen.fleetio.components.LazyLoadingColumn
 import com.nick.mowen.fleetio.components.VehicleFilterBottomSheet
 import com.nick.mowen.fleetio.components.VehicleListItem
 import com.nick.mowen.fleetio.data.Vehicle
+import com.nick.mowen.fleetio.data.VehicleFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -72,7 +73,7 @@ fun VehiclesScreen(
             loadMore = onLoadMore,
         )
 
-        VehicleFilterBottomSheet(showBottomSheet) { showBottomSheet = false }
+        VehicleFilterBottomSheet(VehicleFilter(), showBottomSheet) { showBottomSheet = false }
     }
 }
 
