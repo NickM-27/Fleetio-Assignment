@@ -27,10 +27,10 @@ data class Vehicle(
     val vehicleStatus: String,
 
     @SerializedName("make")
-    val make: String,
+    val make: String?,
 
     @SerializedName("model")
-    val model: String,
+    val model: String?,
 
     @SerializedName("year")
     val year: Int,
@@ -44,7 +44,7 @@ data class Vehicle(
 
     fun getDescription() = "${group ?: "No Group"} • $vehicleStatus"
 
-    fun getInitials() = "${make.substring(0, 1)}${model.substring(0, 1)}"
+    fun getInitials() = "${make?.substring(0, 1) ?: ""}${model?.substring(0, 1) ?: ""}"
 
     fun hasImage() = imageUrl != null
 

@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 class FleetioClient {
 
@@ -27,9 +28,9 @@ class FleetioClient {
         Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build()
             .create(PrivateClient::class.java)
 
-    suspend fun getVehicles(): VehiclesResponse? = withContext(Dispatchers.Default) {
+    suspend fun getVehicles(startCursor: String? = null): VehiclesResponse? = withContext(Dispatchers.Default) {
         try {
-            client.getVehicles().execute().body()
+            client.getVehicles(startCursor).execute().body()
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -39,7 +40,7 @@ class FleetioClient {
     private interface PrivateClient {
 
         @GET("vehicles")
-        fun getVehicles(): Call<VehiclesResponse>
+        fun getVehicles(@Query("start_cursor") startCursor: String?): Call<VehiclesResponse>
     }
 
     companion object {
