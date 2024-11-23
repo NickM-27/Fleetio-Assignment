@@ -69,6 +69,8 @@ dependencies {
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.preview)
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.icons)
+
     debugImplementation(libs.androidx.compose.tooling)
 
     // Network

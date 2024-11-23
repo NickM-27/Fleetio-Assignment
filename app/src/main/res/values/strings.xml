@@ -8,4 +8,6 @@
     <string name="title_license_plate">License Plate</string>
     <string name="title_current_assignment">Current Operator</string>
     <string name="title_future_assignment">Future Operator</string>
+    <string name="action_filter">Filter</string>
+    <string name="title_filter_vehicles">Filter Vehicles</string>
 </resources>
