@@ -1,6 +1,5 @@
 package com.nick.mowen.fleetio.data
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nick.mowen.fleetio.api.FleetioClient
@@ -18,11 +17,16 @@ class VehiclesViewModel : ViewModel() {
     private val _vehicles: MutableStateFlow<List<Vehicle>?> = MutableStateFlow(null)
     val vehicles: StateFlow<List<Vehicle>?> = _vehicles.asStateFlow()
 
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     private val _canLoadMoreVehicles: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val canLoadMoreVehicles: StateFlow<Boolean> = _canLoadMoreVehicles.asStateFlow()
 
     fun getVehicles() = viewModelScope.launch {
+        _isLoading.emit(true)
         client.getVehicles()?.let { vehiclesResponse ->
+            _isLoading.emit(false)
             _vehicleResponses.emit(listOf(vehiclesResponse))
             _vehicles.emit(vehiclesResponse.vehicles)
             _canLoadMoreVehicles.emit(vehiclesResponse.next_cursor != null)
@@ -35,8 +39,9 @@ class VehiclesViewModel : ViewModel() {
         }
 
         _vehicleResponses.value?.lastOrNull()?.let { lastResponse ->
+            _isLoading.emit(true)
             client.getVehicles(lastResponse.next_cursor)?.let { vehiclesResponse ->
-                Log.e("ERROR?", "Loading more from cursor ${lastResponse.next_cursor} and got items ${vehiclesResponse}")
+                _isLoading.emit(false)
                 val currentResponses = _vehicleResponses.value?.toMutableList() ?: mutableListOf()
                 currentResponses.add(vehiclesResponse)
                 _vehicleResponses.emit(currentResponses)

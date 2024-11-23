@@ -1,5 +1,7 @@
 package com.nick.mowen.fleetio.vehicles
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -9,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,8 +25,14 @@ import kotlinx.coroutines.flow.asStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehiclesScreen(vehiclesState: StateFlow<List<Vehicle>?>, canLoadMoreState: StateFlow<Boolean>, onLoadMore: () -> Unit) {
+fun VehiclesScreen(
+    vehiclesState: StateFlow<List<Vehicle>?>,
+    isLoadingState: StateFlow<Boolean>,
+    canLoadMoreState: StateFlow<Boolean>,
+    onLoadMore: () -> Unit
+) {
     val vehicles = vehiclesState.collectAsState()
+    val isLoading = isLoadingState.collectAsState()
     val canLoadMore = canLoadMoreState.collectAsState()
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -31,11 +40,19 @@ fun VehiclesScreen(vehiclesState: StateFlow<List<Vehicle>?>, canLoadMoreState: S
     }) { innerPadding ->
         LazyLoadingColumn(
             modifier = Modifier.padding(innerPadding),
-            loading = vehicles.value == null,
+            loading = isLoading.value,
             listItems = vehicles.value ?: emptyList(),
             itemKey = { vehicle -> vehicle.id },
             itemContent = { vehicle -> VehicleListItem(vehicle) },
-            loadingItem = { CircularProgressIndicator() },
+            loadingItem = {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator()
+                }
+            },
             canLoadMore = canLoadMore.value,
             loadMore = onLoadMore,
         )
@@ -50,6 +67,7 @@ fun VehiclesScreenPreview() {
             Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)
         )
     ).asStateFlow()
+    val isLoadingState = MutableStateFlow(false).asStateFlow()
     val canLoadMoreState = MutableStateFlow(false).asStateFlow()
-    VehiclesScreen(data, canLoadMoreState, onLoadMore = {})
+    VehiclesScreen(data, isLoadingState, canLoadMoreState, onLoadMore = {})
 }
