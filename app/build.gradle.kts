@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
 
     implementation(libs.network.retrofit)
     implementation(libs.network.gson)
+    implementation(libs.network.serialization)
 
     // Testing
 

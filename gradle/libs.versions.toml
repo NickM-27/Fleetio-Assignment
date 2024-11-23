@@ -4,6 +4,7 @@
 
 agp = "8.7.2"
 kotlin = "1.9.24"
+jvm = "1.9.24"
 
 # core
 
@@ -20,6 +21,7 @@ composeNav = "2.8.4"
 # network
 
 retrofit = "2.9.0"
+serialization = "1.7.3"
 
 # test
 
@@ -51,6 +53,7 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 network-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+network-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 # test
 
@@ -61,3 +64,5 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jvm" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "jvm" }
