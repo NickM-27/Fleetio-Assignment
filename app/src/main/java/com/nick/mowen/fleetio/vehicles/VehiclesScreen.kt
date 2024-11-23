@@ -15,8 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.nick.mowen.fleetio.R
 import com.nick.mowen.fleetio.components.VehicleListItem
+import com.nick.mowen.fleetio.data.Vehicle
 import com.nick.mowen.fleetio.data.VehiclesResponse
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,5 +49,12 @@ fun VehiclesList(vehicles: VehiclesResponse, modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun VehiclesScreenPreview() {
-    //VehiclesScreen()
+    val data = MutableStateFlow(
+        VehiclesResponse(
+            "", null, listOf(
+                Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)
+            )
+        )
+    )
+    VehiclesScreen(data.asStateFlow())
 }

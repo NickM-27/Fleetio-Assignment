@@ -69,5 +69,5 @@ fun VehicleListItem(vehicle: Vehicle) {
 @Composable
 @Preview
 fun VehicleListItemPreview() {
-
+    VehicleListItem(Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null))
 }
