@@ -17,6 +17,11 @@ class VehiclesViewModel : ViewModel() {
     private val _vehicles: MutableStateFlow<List<Vehicle>?> = MutableStateFlow(null)
     val vehicles: StateFlow<List<Vehicle>?> = _vehicles.asStateFlow()
 
+    private val _assignmentResponses: MutableStateFlow<AssignmentResponse?> = MutableStateFlow(null)
+
+    private val _assignment: MutableStateFlow<Assignment?> = MutableStateFlow(null)
+    val assignment: StateFlow<Assignment?> = _assignment.asStateFlow()
+
     private val _commentResponses: MutableStateFlow<List<CommentResponse>?> = MutableStateFlow(null)
 
     private val _comments: MutableStateFlow<List<VehicleComment>?> = MutableStateFlow(null)
@@ -60,8 +65,12 @@ class VehiclesViewModel : ViewModel() {
         }
     }
 
-    fun getVehicleComments(vehicleId: Long) = viewModelScope.launch {
+    fun getVehicleInfo(vehicleId: Long) = viewModelScope.launch {
         _isLoading.emit(true)
+        client.getVehicleAssignment(vehicleId)?.let { assignmentResponse ->
+            _assignmentResponses.emit(assignmentResponse)
+            _assignment.emit(assignmentResponse.assignments.firstOrNull())
+        }
         client.getCommentsOnVehicle(vehicleId)?.let { commentResponse ->
             _isLoading.emit(false)
             _commentResponses.emit(listOf(commentResponse))

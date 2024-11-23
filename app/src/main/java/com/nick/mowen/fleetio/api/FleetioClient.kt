@@ -1,8 +1,8 @@
 package com.nick.mowen.fleetio.api
 
 import com.nick.mowen.fleetio.BuildConfig
+import com.nick.mowen.fleetio.data.AssignmentResponse
 import com.nick.mowen.fleetio.data.CommentResponse
-import com.nick.mowen.fleetio.data.VehicleComment
 import com.nick.mowen.fleetio.data.VehiclesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,6 +11,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 class FleetioClient {
@@ -48,6 +49,15 @@ class FleetioClient {
         }
     }
 
+    suspend fun getVehicleAssignment(vehicleId: Long) = withContext(Dispatchers.Default) {
+        try {
+            client.getVehicleAssignments(vehicleId).execute().body()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     private interface PrivateClient {
 
         @GET("vehicles")
@@ -58,10 +68,12 @@ class FleetioClient {
         ): Call<VehiclesResponse>
 
         @GET("comments")
-        fun getComments(
+        fun getComments(@Query("start_cursor") startCursor: String?): Call<CommentResponse>
 
-            @Query("start_cursor") startCursor: String?,
-        ): Call<CommentResponse>
+        @GET("vehicles/{vehicleId}/vehicle_assignments")
+        fun getVehicleAssignments(
+            @Path("vehicleId") vehicleId: Long
+        ): Call<AssignmentResponse>
     }
 
     companion object {

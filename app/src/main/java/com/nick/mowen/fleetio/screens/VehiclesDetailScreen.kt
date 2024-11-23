@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
@@ -27,19 +28,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.nick.mowen.fleetio.R
 import com.nick.mowen.fleetio.components.LazyLoadingColumn
 import com.nick.mowen.fleetio.components.TabGroup
 import com.nick.mowen.fleetio.components.VehicleImage
-import com.nick.mowen.fleetio.components.VehicleListItem
+import com.nick.mowen.fleetio.data.Assignment
 import com.nick.mowen.fleetio.data.Vehicle
 import com.nick.mowen.fleetio.data.VehicleComment
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehicleDetailsScreen(vehicle: Vehicle, commentsState: StateFlow<List<VehicleComment>?>, onNavigateBack: () -> Unit) {
+fun VehicleDetailsScreen(
+    vehicle: Vehicle,
+    assignmentState: StateFlow<Assignment?>,
+    commentsState: StateFlow<List<VehicleComment>?>,
+    onNavigateBack: () -> Unit
+) {
     var currentTab by remember { mutableStateOf("Details") }
 
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -64,7 +72,7 @@ fun VehicleDetailsScreen(vehicle: Vehicle, commentsState: StateFlow<List<Vehicle
             }
 
             if (currentTab == "Details") {
-                VehicleDetailsLayout(vehicle)
+                VehicleDetailsLayout(vehicle, assignmentState)
             } else {
                 VehicleCommentsLayout(commentsState)
             }
@@ -73,7 +81,9 @@ fun VehicleDetailsScreen(vehicle: Vehicle, commentsState: StateFlow<List<Vehicle
 }
 
 @Composable
-fun VehicleDetailsLayout(vehicle: Vehicle) {
+fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment?>) {
+    val assignment = assignmentState.collectAsState()
+
     Column {
         ListItem(
             leadingContent = { Icon(Icons.Filled.Info, "") },
@@ -107,6 +117,19 @@ fun VehicleDetailsLayout(vehicle: Vehicle) {
             headlineContent = { Text(stringResource(R.string.title_vehicle_status)) },
             supportingContent = { Text(vehicle.vehicleStatus) }
         )
+
+        assignment.value?.let { assignment ->
+            val titleId = if (assignment.current) R.string.title_current_assignment else R.string.title_future_assignment
+
+            Column(modifier = Modifier.padding(8.dp)) {
+                Text(stringResource(titleId), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                ListItem(
+                    leadingContent = { AsyncImage(assignment.contact.imageUrl, "", modifier = Modifier.size(48.dp)) },
+                    headlineContent = { Text(assignment.contact.name, fontWeight = FontWeight.Bold) },
+                    supportingContent = { Text(assignment.contact.email) }
+                )
+            }
+        }
     }
 }
 

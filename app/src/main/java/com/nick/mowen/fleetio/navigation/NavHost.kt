@@ -24,8 +24,8 @@ fun FleetioNavigation(viewModel: VehiclesViewModel) {
             }
             composable<Vehicle> { backStackEntry ->
                 backStackEntry.toRoute<Vehicle>().let { vehicle ->
-                    viewModel.getVehicleComments(vehicle.id)
-                    VehicleDetailsScreen(vehicle, viewModel.comments, onNavigateBack = {
+                    viewModel.getVehicleInfo(vehicle.id)
+                    VehicleDetailsScreen(vehicle, viewModel.assignment, viewModel.comments, onNavigateBack = {
                         navController.popBackStack()
                     })
                 }

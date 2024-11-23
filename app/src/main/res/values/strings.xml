@@ -6,4 +6,6 @@
     <string name="title_vehicle_status">Vehicle Status</string>
     <string name="title_vin">VIN</string>
     <string name="title_license_plate">License Plate</string>
+    <string name="title_current_assignment">Current Operator</string>
+    <string name="title_future_assignment">Future Operator</string>
 </resources>
