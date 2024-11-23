@@ -11,7 +11,7 @@ data class AssignmentResponse(
     val name: String,
 
     @SerializedName("contact_image_url")
-    val imageUrl: String,
+    val imageUrl: String?,
 
     @SerializedName("current")
     val current: Boolean,

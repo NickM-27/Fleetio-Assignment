@@ -115,6 +115,14 @@ fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment
             )
         }
 
+        vehicle.group?.let { group ->
+            ListItem(
+                leadingContent = { Icon(Icons.Filled.Info, "") },
+                headlineContent = { Text(stringResource(R.string.title_vehicle_group)) },
+                supportingContent = { Text(group) }
+            )
+        }
+
         ListItem(
             leadingContent = { Icon(Icons.Filled.Info, "") },
             headlineContent = { Text(stringResource(R.string.title_vehicle_status)) },
@@ -122,14 +130,16 @@ fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment
         )
 
         assignment.value?.let { assignment ->
-            val titleId = if (assignment.current) R.string.title_current_assignment else R.string.title_future_assignment
+            if (assignment.current || assignment.future) {
+                val titleId = if (assignment.current) R.string.title_current_assignment else R.string.title_future_assignment
 
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text(stringResource(titleId), fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                ListItem(
-                    leadingContent = { AsyncImage(assignment.imageUrl, "", modifier = Modifier.size(48.dp)) },
-                    headlineContent = { Text(assignment.name, fontWeight = FontWeight.Bold) },
-                )
+                Column(modifier = Modifier.padding(8.dp)) {
+                    Text(stringResource(titleId), fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    ListItem(
+                        leadingContent = { AsyncImage(assignment.imageUrl, "", modifier = Modifier.size(48.dp)) },
+                        headlineContent = { Text(assignment.name, fontWeight = FontWeight.Bold) },
+                    )
+                }
             }
         }
     }
