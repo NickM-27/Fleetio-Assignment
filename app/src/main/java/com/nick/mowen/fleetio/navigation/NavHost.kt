@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.nick.mowen.fleetio.data.Vehicle
 import com.nick.mowen.fleetio.data.VehiclesViewModel
-import com.nick.mowen.fleetio.vehicles.VehiclesScreen
+import com.nick.mowen.fleetio.screens.VehicleDetailsScreen
+import com.nick.mowen.fleetio.screens.VehiclesScreen
 
 @Composable
 fun FleetioNavigation(viewModel: VehiclesViewModel) {
@@ -20,8 +22,8 @@ fun FleetioNavigation(viewModel: VehiclesViewModel) {
                     navController.navigate(vehicle)
                 }
             }
-            composable<Vehicle> {
-
+            composable<Vehicle> { backStackEntry ->
+                VehicleDetailsScreen(backStackEntry.toRoute<Vehicle>())
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.nick.mowen.fleetio.vehicles
+package com.nick.mowen.fleetio.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -62,7 +62,7 @@ fun VehiclesScreen(
 
 @Composable
 @Preview
-fun VehiclesScreenPreview() {
+private fun VehiclesScreenPreview() {
     val data = MutableStateFlow(
         listOf(
             Vehicle(123456, 987, "Test Vehicle", "Car", "Active", "Cool", "Cars", 2024, "Operator", null)
