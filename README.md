@@ -21,3 +21,5 @@ The app was built using `Android Studio Ladybug | 2024.2.1 Patch 2` and is set t
 
 The UI is built using Jetpack Compose and Kotlin Coroutines.
 Networking is done via Retrofit / OkHttp / Gson.
+
+[Screen_recording_20241123_145326.webm](https://github.com/user-attachments/assets/baee8881-3662-4ab1-a63c-66e9e20daf74)
