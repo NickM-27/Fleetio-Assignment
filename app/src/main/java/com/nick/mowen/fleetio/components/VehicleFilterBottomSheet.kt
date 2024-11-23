@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -37,8 +38,8 @@ fun VehicleFilterBottomSheet(showBottomSheet: Boolean, onDismiss: () -> Unit) {
                 Text(stringResource(R.string.title_filter_vehicles), fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
                 Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Button({}) { Text("Apply Filter") }
-                    OutlinedButton({}) { Text("Reset Filter") }
+                    Button({}, shape = RoundedCornerShape(8.dp)) { Text("Apply Filter") }
+                    OutlinedButton({}, shape = RoundedCornerShape(8.dp)) { Text("Reset Filter") }
                 }
             }
         }
