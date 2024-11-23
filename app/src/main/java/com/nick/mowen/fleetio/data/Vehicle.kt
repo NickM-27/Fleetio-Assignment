@@ -2,7 +2,10 @@ package com.nick.mowen.fleetio.data
 
 import androidx.compose.ui.graphics.Color
 import com.google.gson.annotations.SerializedName
-import com.nick.mowen.fleetio.ui.theme.*
+import com.nick.mowen.fleetio.ui.theme.Active
+import com.nick.mowen.fleetio.ui.theme.InShop
+import com.nick.mowen.fleetio.ui.theme.Inactive
+import com.nick.mowen.fleetio.ui.theme.OutOfService
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -37,6 +40,8 @@ data class Vehicle(
 ) {
 
     fun getTitle() = "$id [$year $make $model]"
+
+    fun getInitials() = "${make.substring(0, 1)}${model.substring(0, 1)}"
 
     fun hasImage() = imageUrl != null
 
