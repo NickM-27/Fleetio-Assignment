@@ -43,7 +43,7 @@ data class Vehicle(
     val vehicleType: String,
 
     @SerializedName("vehicle_status_name")
-    val vehicleStatus: String,
+    val vehicleStatusName: String,
 
     @SerializedName("make")
     val make: String?,
@@ -77,7 +77,10 @@ data class Vehicle(
     val secondaryMeterValue: String?,
 ) {
 
-    fun getDescription() = "${group ?: "No Group"} • $vehicleStatus"
+    val vehicleStatus: VehicleStatus
+        get() = VehicleStatus.getFromString(vehicleStatusName) ?: VehicleStatus.UNKNOWN
+
+    fun getDescription() = "${group ?: "No Group"} • ${vehicleStatus.webStr}"
 
     fun getInitials() = "${make?.substring(0, 1) ?: ""}${model?.substring(0, 1) ?: ""}"
 
@@ -92,10 +95,23 @@ data class Vehicle(
     fun hasImage() = imageUrl != null
 
     fun getStatusColor() = when (vehicleStatus) {
-        "Active" -> Active
-        "In Shop" -> InShop
-        "Inactive" -> Inactive
-        "Out of Service" -> OutOfService
+        VehicleStatus.ACTIVE -> Active
+        VehicleStatus.INACTIVE -> Inactive
+        VehicleStatus.IN_SHOP -> InShop
+        VehicleStatus.OUT_OF_SERVICE -> OutOfService
         else -> Color.Gray
+    }
+}
+
+enum class VehicleStatus(val webStr: String) {
+    ACTIVE("Active"),
+    IN_SHOP("In Shop"),
+    INACTIVE("Inactive"),
+    OUT_OF_SERVICE("Out of Service"),
+    UNKNOWN("Unknown");
+
+    companion object {
+
+        fun getFromString(input: String) = VehicleStatus.entries.find { status -> status.webStr == input }
     }
 }

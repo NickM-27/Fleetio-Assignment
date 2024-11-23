@@ -117,7 +117,7 @@ fun VehicleDetailsLayout(vehicle: Vehicle, assignmentState: StateFlow<Assignment
         ListItem(
             leadingContent = { Icon(Icons.Filled.Info, "") },
             headlineContent = { Text(stringResource(R.string.title_vehicle_status)) },
-            supportingContent = { Text(vehicle.vehicleStatus) }
+            supportingContent = { Text(vehicle.vehicleStatus.webStr) }
         )
 
         assignment.value?.let { assignment ->
