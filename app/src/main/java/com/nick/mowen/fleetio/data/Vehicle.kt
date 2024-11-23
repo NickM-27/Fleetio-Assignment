@@ -35,11 +35,14 @@ data class Vehicle(
     @SerializedName("year")
     val year: Int,
 
+    @SerializedName("group_name")
+    val group: String?,
+
     @SerializedName("default_image_url_small")
     val imageUrl: String?
 ) {
 
-    fun getTitle() = "$id [$year $make $model]"
+    fun getDescription() = "${group ?: "No Group"} • $vehicleStatus"
 
     fun getInitials() = "${make.substring(0, 1)}${model.substring(0, 1)}"
 

@@ -54,13 +54,13 @@ fun VehicleListItem(vehicle: Vehicle) {
             },
             headlineContent = {
                 Text(
-                    vehicle.getTitle(),
+                    vehicle.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontSize = 14.sp
                 )
             },
             supportingContent = {
-                Text(vehicle.vehicleStatus)
+                Text(vehicle.getDescription(), fontSize = 12.sp)
             }
         )
     }
