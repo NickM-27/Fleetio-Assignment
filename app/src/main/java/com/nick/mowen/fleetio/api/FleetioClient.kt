@@ -1,6 +1,8 @@
 package com.nick.mowen.fleetio.api
 
 import com.nick.mowen.fleetio.BuildConfig
+import com.nick.mowen.fleetio.data.CommentResponse
+import com.nick.mowen.fleetio.data.VehicleComment
 import com.nick.mowen.fleetio.data.VehiclesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -37,18 +39,36 @@ class FleetioClient {
         }
     }
 
+    suspend fun getCommentsOnVehicle(vehicleId: Long, startCursor: String? = null) = withContext(Dispatchers.Default) {
+        try {
+            client.getComments(startCursor).execute().body()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     private interface PrivateClient {
 
         @GET("vehicles")
         fun getVehicles(
             @Query("start_cursor") startCursor: String?,
-            @Query("per_page") limit: Int = 10,
-            @Query("sort[name]") nameSort: String = "asc"
+            @Query("per_page") limit: Int = DEFAULT_VEHICLE_PAGE_SIZE,
+            @Query("sort[name]") nameSort: String = DEFAULT_VEHICLE_SORT
         ): Call<VehiclesResponse>
+
+        @GET("comments")
+        fun getComments(
+
+            @Query("start_cursor") startCursor: String?,
+        ): Call<CommentResponse>
     }
 
     companion object {
 
         private const val BASE_URL = "https://secure.fleetio.com/api/v1/"
+
+        private const val DEFAULT_VEHICLE_PAGE_SIZE = 10
+        private const val DEFAULT_VEHICLE_SORT = "asc"
     }
 }

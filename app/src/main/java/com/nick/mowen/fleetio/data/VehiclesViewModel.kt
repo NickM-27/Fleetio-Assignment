@@ -17,6 +17,11 @@ class VehiclesViewModel : ViewModel() {
     private val _vehicles: MutableStateFlow<List<Vehicle>?> = MutableStateFlow(null)
     val vehicles: StateFlow<List<Vehicle>?> = _vehicles.asStateFlow()
 
+    private val _commentResponses: MutableStateFlow<List<CommentResponse>?> = MutableStateFlow(null)
+
+    private val _comments: MutableStateFlow<List<VehicleComment>?> = MutableStateFlow(null)
+    val comments: StateFlow<List<VehicleComment>?> = _comments.asStateFlow()
+
     private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
@@ -52,6 +57,15 @@ class VehiclesViewModel : ViewModel() {
 
                 _canLoadMoreVehicles.emit(vehiclesResponse.next_cursor != null)
             }
+        }
+    }
+
+    fun getVehicleComments(vehicleId: Long) = viewModelScope.launch {
+        _isLoading.emit(true)
+        client.getCommentsOnVehicle(vehicleId)?.let { commentResponse ->
+            _isLoading.emit(false)
+            _commentResponses.emit(listOf(commentResponse))
+            _comments.emit(commentResponse.comments)
         }
     }
 }
