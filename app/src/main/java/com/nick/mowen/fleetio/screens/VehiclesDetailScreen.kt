@@ -15,19 +15,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.nick.mowen.fleetio.components.TabGroup
 import com.nick.mowen.fleetio.components.VehicleImage
 import com.nick.mowen.fleetio.data.Vehicle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VehicleDetailsScreen(vehicle: Vehicle) {
+fun VehicleDetailsScreen(vehicle: Vehicle, onNavigateBack: () -> Unit) {
+    var currentTab by remember { mutableStateOf("Details") }
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         TopAppBar(navigationIcon = {
-            IconButton(onClick = {}) {
+            IconButton(onClick = onNavigateBack) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "")
             }
         }, title = {
@@ -42,7 +49,9 @@ fun VehicleDetailsScreen(vehicle: Vehicle) {
         })
     }) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-
+            TabGroup(Modifier.fillMaxWidth(), listOf("Details", "Comments"), currentTab) {
+                currentTab = it
+            }
         }
     }
 }
