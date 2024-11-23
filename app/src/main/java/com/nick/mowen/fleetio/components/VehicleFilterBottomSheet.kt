@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -69,9 +71,19 @@ fun VehicleFilterBottomSheet(showBottomSheet: Boolean, onUpdateFilter: (String, 
                     }
                 }
 
-                Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
-                    Button({ }, shape = RoundedCornerShape(8.dp)) { Text("Apply Filter") }
-                    OutlinedButton({}, shape = RoundedCornerShape(8.dp)) { Text("Reset Filter") }
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                    Button(
+                        {
+                            onUpdateFilter(nameFilter.value, statusFilter.value)
+                            onDismiss()
+                        },
+                        shape = RoundedCornerShape(8.dp)
+                    ) { Text("Apply Filter") }
+                    Spacer(Modifier.size(8.dp))
+                    OutlinedButton({
+                        nameFilter.value = ""
+                        statusFilter.value = VehicleStatus.entries.toSet()
+                    }, shape = RoundedCornerShape(8.dp)) { Text("Reset Filter") }
                 }
             }
         }

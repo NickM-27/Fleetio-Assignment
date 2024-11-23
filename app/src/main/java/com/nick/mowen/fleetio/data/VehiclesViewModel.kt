@@ -42,12 +42,16 @@ class VehiclesViewModel : ViewModel() {
 
     fun getVehicles() = viewModelScope.launch {
         _isLoading.emit(true)
-        client.getVehicles()?.let { vehiclesResponse ->
-            _isLoading.emit(false)
-            _vehicleResponses.emit(listOf(vehiclesResponse))
-            _vehicles.emit(vehiclesResponse.vehicles)
-            _canLoadMoreVehicles.emit(vehiclesResponse.next_cursor != null)
-        }
+        client.getVehicles(
+            nameFilter = nameFilter,
+            statusFilter = statusFilter.takeIf { it.size != VehicleStatus.entries.size },  // don't send filter if all items are present
+        )
+            ?.let { vehiclesResponse ->
+                _isLoading.emit(false)
+                _vehicleResponses.emit(listOf(vehiclesResponse))
+                _vehicles.emit(vehiclesResponse.vehicles)
+                _canLoadMoreVehicles.emit(vehiclesResponse.next_cursor != null)
+            }
     }
 
     fun getMoreVehicles() = viewModelScope.launch {
