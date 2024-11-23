@@ -37,7 +37,7 @@ class FleetioClient {
         nameFilter: String? = null,
     ): VehiclesResponse? = withContext(Dispatchers.Default) {
         try {
-            client.getVehicles(startCursor).execute().body()
+            client.getVehicles(startCursor, filterName = nameFilter).execute().body()
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -45,6 +45,7 @@ class FleetioClient {
     }
 
     suspend fun getCommentsOnVehicle(vehicleId: Long, startCursor: String? = null) = withContext(Dispatchers.Default) {
+        // TODO figure out how to use vehicle ID to filter comments on specific vehicle
         try {
             client.getComments(startCursor).execute().body()
         } catch (e: Exception) {
@@ -69,6 +70,7 @@ class FleetioClient {
             @Query("start_cursor") startCursor: String?,
             @Query("per_page") limit: Int = DEFAULT_VEHICLE_PAGE_SIZE,
             @Query("sort[name]") nameSort: String = DEFAULT_VEHICLE_SORT,
+            @Query("filter[name][like]") filterName: String? = null,
         ): Call<VehiclesResponse>
 
         @GET("comments")

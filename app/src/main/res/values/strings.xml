@@ -12,4 +12,7 @@
     <string name="title_filter_vehicles">Filter Vehicles</string>
     <string name="title_filter_by_status">Filter by Status</string>
     <string name="title_filter_by_name">Filter by Name</string>
+    <string name="action_filter_name">Insert text to filter name by</string>
+    <string name="action_reset_filter">Reset Filter</string>
+    <string name="action_apply_filter">Apply Filter</string>
 </resources>

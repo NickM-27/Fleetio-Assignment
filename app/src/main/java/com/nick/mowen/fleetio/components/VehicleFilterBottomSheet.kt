@@ -15,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +49,12 @@ fun VehicleFilterBottomSheet(showBottomSheet: Boolean, onUpdateFilter: (String, 
                 ) { Text(stringResource(R.string.title_filter_vehicles), fontWeight = FontWeight.Bold, fontSize = 18.sp) }
 
                 Text(stringResource(R.string.title_filter_by_name))
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = nameFilter.value,
+                    onValueChange = { nameFilter.value = it },
+                    label = { Text(stringResource(R.string.action_filter_name)) }
+                )
 
                 Text(stringResource(R.string.title_filter_by_status))
                 VehicleStatus.entries.map { status ->
@@ -78,12 +85,12 @@ fun VehicleFilterBottomSheet(showBottomSheet: Boolean, onUpdateFilter: (String, 
                             onDismiss()
                         },
                         shape = RoundedCornerShape(8.dp)
-                    ) { Text("Apply Filter") }
+                    ) { Text(stringResource(R.string.action_apply_filter)) }
                     Spacer(Modifier.size(8.dp))
                     OutlinedButton({
                         nameFilter.value = ""
                         statusFilter.value = VehicleStatus.entries.toSet()
-                    }, shape = RoundedCornerShape(8.dp)) { Text("Reset Filter") }
+                    }, shape = RoundedCornerShape(8.dp)) { Text(stringResource(R.string.action_reset_filter)) }
                 }
             }
         }
