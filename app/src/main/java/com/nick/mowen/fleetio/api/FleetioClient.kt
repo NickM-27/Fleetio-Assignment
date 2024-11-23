@@ -8,6 +8,7 @@ import com.nick.mowen.fleetio.data.VehiclesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,7 +28,7 @@ class FleetioClient {
                     builder.addHeader("Account-Token", BuildConfig.ACCOUNT_TOKEN)
                 }.build()
         )
-    }.build()
+    }.addInterceptor(HttpLoggingInterceptor()).build()
     private val client: PrivateClient =
         Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build()
             .create(PrivateClient::class.java)

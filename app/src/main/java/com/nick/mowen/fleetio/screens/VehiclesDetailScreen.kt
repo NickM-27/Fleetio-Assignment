@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -139,7 +140,13 @@ fun VehicleCommentsLayout(commentsState: StateFlow<List<VehicleComment>?>) {
     val comments = commentsState.collectAsState()
     LazyLoadingColumn(loading = comments.value == null, listItems = comments.value ?: emptyList(),
         itemKey = { vehicle -> vehicle.id },
-        itemContent = { comment -> Text(comment.comment) },
+        itemContent = { comment ->
+            ListItem(
+                leadingContent = { Icon(Icons.AutoMirrored.Filled.Comment, "") },
+                headlineContent = { Text(comment.comment, fontSize = 16.sp) },
+                supportingContent = { Text(comment.author.name) }
+            )
+        },
         loadingItem = {
             Column(
                 modifier = Modifier.fillMaxSize(),

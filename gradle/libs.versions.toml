@@ -21,6 +21,7 @@ composeNav = "2.8.4"
 # network
 
 retrofit = "2.9.0"
+okhttp = "4.0.1"
 serialization = "1.6.3"
 coil = "3.0.3"
 
@@ -54,6 +55,7 @@ androidx-compose-icons = { group = "androidx.compose.material", name = "material
 # network
 
 network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+network-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 network-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 network-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 network-coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }

@@ -76,6 +76,7 @@ dependencies {
     // Network
 
     implementation(libs.network.retrofit)
+    implementation(libs.network.logging)
     implementation(libs.network.gson)
     implementation(libs.network.serialization)
     implementation(libs.network.coil)
