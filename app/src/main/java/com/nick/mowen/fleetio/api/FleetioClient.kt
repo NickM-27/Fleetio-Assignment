@@ -40,7 +40,11 @@ class FleetioClient {
     private interface PrivateClient {
 
         @GET("vehicles")
-        fun getVehicles(@Query("start_cursor") startCursor: String?, @Query("per_page") limit: Int = 10): Call<VehiclesResponse>
+        fun getVehicles(
+            @Query("start_cursor") startCursor: String?,
+            @Query("per_page") limit: Int = 10,
+            @Query("sort[name]") nameSort: String = "asc"
+        ): Call<VehiclesResponse>
     }
 
     companion object {
