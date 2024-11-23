@@ -44,7 +44,7 @@ fun VehiclesScreen(
             loading = isLoading.value,
             listItems = vehicles.value ?: emptyList(),
             itemKey = { vehicle -> vehicle.id },
-            itemContent = { vehicle -> VehicleListItem(vehicle, { onSelectVehicle(vehicle) }) },
+            itemContent = { vehicle -> VehicleListItem(vehicle) { onSelectVehicle(vehicle) } },
             loadingItem = {
                 Column(
                     modifier = Modifier.fillMaxSize(),
