@@ -44,12 +44,11 @@ class VehiclesViewModel : ViewModel() {
         _isLoading.emit(true)
         client.getVehicles(
             nameFilter = nameFilter,
-            statusFilter = statusFilter.takeIf { it.size != VehicleStatus.entries.size },  // don't send filter if all items are present
         )
             ?.let { vehiclesResponse ->
                 _isLoading.emit(false)
                 _vehicleResponses.emit(listOf(vehiclesResponse))
-                _vehicles.emit(vehiclesResponse.vehicles)
+                _vehicles.emit(vehiclesResponse.vehicles.filter { vehicle -> vehicle.vehicleStatus in statusFilter })
                 _canLoadMoreVehicles.emit(vehiclesResponse.next_cursor != null)
             }
     }

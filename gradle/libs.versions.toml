@@ -21,7 +21,7 @@ composeNav = "2.8.4"
 # network
 
 retrofit = "2.9.0"
-okhttp = "4.0.1"
+okhttp = "4.6.0"
 serialization = "1.6.3"
 coil = "3.0.3"
 

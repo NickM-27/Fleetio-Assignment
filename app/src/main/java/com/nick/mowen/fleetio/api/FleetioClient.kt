@@ -3,7 +3,6 @@ package com.nick.mowen.fleetio.api
 import com.nick.mowen.fleetio.BuildConfig
 import com.nick.mowen.fleetio.data.AssignmentResponse
 import com.nick.mowen.fleetio.data.CommentResponse
-import com.nick.mowen.fleetio.data.VehicleStatus
 import com.nick.mowen.fleetio.data.VehiclesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,7 +27,7 @@ class FleetioClient {
                     builder.addHeader("Account-Token", BuildConfig.ACCOUNT_TOKEN)
                 }.build()
         )
-    }.addInterceptor(HttpLoggingInterceptor()).build()
+    }.addInterceptor(HttpLoggingInterceptor().also { it.level = HttpLoggingInterceptor.Level.BODY }).build()
     private val client: PrivateClient =
         Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build()
             .create(PrivateClient::class.java)
@@ -36,10 +35,9 @@ class FleetioClient {
     suspend fun getVehicles(
         startCursor: String? = null,
         nameFilter: String? = null,
-        statusFilter: Set<VehicleStatus>? = null
     ): VehiclesResponse? = withContext(Dispatchers.Default) {
         try {
-            client.getVehicles(startCursor, statusFilter = statusFilter?.joinToString(",") { it.webStr }).execute().body()
+            client.getVehicles(startCursor).execute().body()
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -71,7 +69,6 @@ class FleetioClient {
             @Query("start_cursor") startCursor: String?,
             @Query("per_page") limit: Int = DEFAULT_VEHICLE_PAGE_SIZE,
             @Query("sort[name]") nameSort: String = DEFAULT_VEHICLE_SORT,
-            @Query("q[vehicle_status_name_in_s]") statusFilter: String? = null,
         ): Call<VehiclesResponse>
 
         @GET("comments")
